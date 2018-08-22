@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const app = require('../src/app');
+const matches = app.matches;
 
 describe('test', () => {
     it('should return a string', () => {
@@ -11,7 +12,6 @@ describe('test', () => {
     });
 
     it('should return matches as an array', () => {
-        console.log(app);
-        expect(app).to.be.an('array');
+        expect(matches).to.be.an('array');
     });
 });

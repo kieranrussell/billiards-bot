@@ -105,4 +105,6 @@ matches().then(function(data) {
 //     });
 //}
 
-module.exports = todaysMatches;
+module.exports = {
+    matches: todaysMatches
+};
