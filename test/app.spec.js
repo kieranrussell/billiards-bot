@@ -12,6 +12,6 @@ describe('test', () => {
 
     it('should return matches as an array', () => {
         console.log(app);
-        expect(app).to.not.be.empty;
+        expect(app).to.be.an('array');
     });
 });
