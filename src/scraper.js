@@ -1,6 +1,3 @@
-/**
- * Created by Kieran on 22/08/2018.
- */
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 

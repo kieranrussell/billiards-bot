@@ -1,6 +1,3 @@
-/**
- * Created by Kieran on 10/11/2017.
- */
 require('dotenv').config();
 
 const http = require('http');
