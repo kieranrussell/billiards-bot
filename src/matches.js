@@ -8,23 +8,23 @@ const options = {
     }
 };
 
-function getGames(){
+function get(){
     return new Promise(function(resolve, reject){
         rp(options)
             .then(($) => {
-                var games = [];
+                var matches = [];
                 $('table#latest > tbody > tr').each((i, item) => {
-                    var game = {
+                    var match = {
                         player: $('td.player:nth-child(3) > a', item).text().trim(),
                         opponent: $('td.player:nth-child(8) > a', item).text().trim(),
                         time: $('td.scheduled', item).text().trim()
                     };
-                    games.push(game);
+                    matches.push(match);
                 });
 
-                return games;
-            }).then((games) => {
-            resolve(games);
+                return matches;
+            }).then((matches) => {
+                resolve(matches);
         }).catch((err) => {
             console.log(err);
         });

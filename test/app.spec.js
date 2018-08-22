@@ -8,4 +8,8 @@ describe('test', () => {
     it('should do simple maths', () => {
         expect(1).to.equal(2-1);
     });
+
+    it('should return matches', () => {
+        expect([{match:"finish later"}]).to.not.be.empty();
+    });
 });
