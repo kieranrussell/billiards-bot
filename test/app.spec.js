@@ -1,4 +1,5 @@
 const expect = require('chai').expect;
+const app = require('../src/app');
 
 describe('test', () => {
     it('should return a string', () => {
@@ -9,7 +10,8 @@ describe('test', () => {
         expect(1).to.equal(2-1);
     });
 
-    it('should return matches', () => {
-        expect([{match:"finish later"}]).to.not.be.empty;
+    it('should return matches as an array', () => {
+        console.log(app);
+        expect(app).to.not.be.empty;
     });
 });
