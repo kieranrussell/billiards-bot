@@ -10,6 +10,6 @@ describe('test', () => {
     });
 
     it('should return matches', () => {
-        expect([{match:"finish later"}]).to.not.be.empty();
+        expect([{match:"finish later"}]).to.not.be.empty;
     });
 });
