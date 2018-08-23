@@ -1,6 +1,8 @@
 const Snoowrap = require('snoowrap');
 const Snoostorm = require('snoostorm');
 
+// console.log(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDDIT_USER, process.env.REDDIT_PASS);
+
 const r = new Snoowrap({
     userAgent: 'billiard-bot',
     clientId: process.env.CLIENT_ID,
