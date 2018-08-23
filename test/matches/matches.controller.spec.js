@@ -5,16 +5,16 @@ const matchesMock = require('../../src/matches/matches.mock.js');
 const nock = require('nock');
 
 
-describe('Match data retrieval', () => {
+describe('Match data transformation into post', () => {
     beforeEach(() => {
         nock(matchesData.source.domain)
             .get(matchesData.source.path)
             .reply(200, matchesMock.raw);
     });
 
-    it('should return a formatted Daily Tournament Post object', async () => {
+    it('should return a daily tournament post object', async () => {
         var dailyTournamentPost = await matches.getDailyTournamentPost();
 
-        expect(typeof dailyTournamentPost).to.equal('object');
+        expect(JSON.stringify(dailyTournamentPost)).to.equal(JSON.stringify(matchesMock.dailyMessage));
     });
 });
