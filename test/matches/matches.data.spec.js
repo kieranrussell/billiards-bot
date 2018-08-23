@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
-const matches = require('../src/matches/matches');
-const matchesMock = require('../src/matches/matches.mock');
+const matches = require('../../src/matches/matches.data.js');
+const matchesMock = require('../../src/matches/matches.mock.js');
 const nock = require('nock');
 
 
