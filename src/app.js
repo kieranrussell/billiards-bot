@@ -17,7 +17,7 @@ const comments = client.CommentStream(streamOpts);
 
 let todaysMatches = [];
 
-matches().then(function(data) {
+matches.get().then(function(data) {
     todaysMatches = data;
 });
 
