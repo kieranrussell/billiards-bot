@@ -1,11 +1,8 @@
 require('dotenv').config();
-
-const matches = require('./controllers/matches');
 const reddit = require('./reddit');
-
-const http = require('http');
-
 const client = reddit.client;
+const http = require('http');
+const matchesController = require('./matches/matches.controller');
 
 const streamOpts = {
     subreddit: process.env.SUBREDDIT_NAME,
@@ -14,38 +11,11 @@ const streamOpts = {
 
 const comments = client.CommentStream(streamOpts);
 
-//Submit post with daily matches for current tournament.
-let stringFormatMatches = ['Match|||Time\n---------:|:--------:|:---------|----------'];
-
-matches.get().then(function(tournamentData) {
-    var tournamentName = tournamentData.tournament;
-    var todaysData = tournamentData.matches.filter((item) => {
-        return item.time.includes('today');
-    });
-
-    if(todaysData.length === 0){
-        var data = new Date();
-        todaysData = tournamentData.matches.filter((item) => {
-            return item.time.includes(data.getDate() + 1);
-        });
-    }
-
-    stringFormatMatches = stringFormatMatches.concat(todaysData.map((match) => {
-        return `${match.player}|V|${match.opponent}|${match.time.replace('Est. today', '~')}`
-    })).join('\n');
-
-    let currentTime = new Date();
-
-    let postOptions = {
-        subredditName: process.env.SUBREDDIT_NAME,
-        title: `{Discssion Thread} ${tournamentName} ${currentTime.getDay()}/${currentTime.getMonth()}/${currentTime.getFullYear()}`,
-        text: stringFormatMatches
-    };
-
-    console.log(postOptions);
-
+//Post daily tournament/matches to subreddit
+matchesController.getDailyTournamentPost().then(function(dailyTournamentPost) {
+    console.log(dailyTournamentPost);
     //comment out to stop posting every time app.js runs.
-    reddit.r.submitSelfpost(postOptions).then(console.log);
+    reddit.r.submitSelfpost(dailyTournamentPost).then(console.log);
 });
 
 
