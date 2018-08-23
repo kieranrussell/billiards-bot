@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const matches = require('./matches');
+const matches = require('./controllers/matches');
 const reddit = require('./reddit');
 
 const http = require('http');

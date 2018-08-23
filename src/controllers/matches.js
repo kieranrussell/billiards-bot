@@ -1,17 +1,27 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 
+const source = {
+    domain: 'http://www.snooker.org',
+    path: '/res/index.asp?template=24'
+};
+
 const options = {
-    uri: `http://www.snooker.org/res/index.asp?template=24`,
+    uri: source.domain + source.path,
     transform: function (body) {
         return cheerio.load(body);
     }
 };
 
+function getData() {
+
+}
+
 function get() {
     return new Promise(function (resolve, reject) {
         rp(options)
             .then(($) => {
+                var tournament = $('table#latest > thead > tr > th').text().trim();
                 var matches = [];
                 $('table#latest > tbody > tr').each((i, item) => {
                     var match = {
@@ -22,15 +32,19 @@ function get() {
                     matches.push(match);
                 });
 
-                return matches;
-            }).then((matches) => {
-                resolve(matches);
-            }).catch((err) => {
-                console.log(err);
-            });
+                return {
+                    matches: matches,
+                    tournament: tournament
+                };
+            }).then((dailyUpdate) => {
+            resolve(dailyUpdate);
+        }).catch((err) => {
+            reject(err);
+        });
     })
 }
 
-module.exports = { 
-    get: get 
+module.exports = {
+    get: get,
+    source: source
 };
