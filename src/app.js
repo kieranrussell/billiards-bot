@@ -15,27 +15,37 @@ const streamOpts = {
 const comments = client.CommentStream(streamOpts);
 
 //Submit post with daily matches for current tournament.
-let stringFormatMatches = 'Match|||Time\n---------:|:--------:|:---------|----------\n';
+let stringFormatMatches = ['Match|||Time\n---------:|:--------:|:---------|----------'];
 
-matches.get().then(function(data) {
-    data = data.filter((item) => {
+matches.get().then(function(tournamentData) {
+    var tournamentName = tournamentData.tournament;
+    var todaysData = tournamentData.matches.filter((item) => {
         return item.time.includes('today');
     });
 
-    for(let i=0; i<data.length; i++) {
-        stringFormatMatches += data[i].player + '|V|' + data[i].opponent + '|' + data[i].time.replace('Est. today', '~') + '\n';
+    if(todaysData.length === 0){
+        var data = new Date();
+        todaysData = tournamentData.matches.filter((item) => {
+            return item.time.includes(data.getDate() + 1);
+        });
     }
+
+    stringFormatMatches = stringFormatMatches.concat(todaysData.map((match) => {
+        return `${match.player}|V|${match.opponent}|${match.time.replace('Est. today', '~')}`
+    })).join('\n');
 
     let currentTime = new Date();
 
     let postOptions = {
         subredditName: process.env.SUBREDDIT_NAME,
-        title: '{Discssion Thread} TOURNAMENT NAME ' + currentTime.getDay() + '/' + currentTime.getMonth() + '/' + currentTime.getFullYear(),
+        title: `{Discssion Thread} ${tournamentName} ${currentTime.getDay()}/${currentTime.getMonth()}/${currentTime.getFullYear()}`,
         text: stringFormatMatches
     };
 
+    console.log(postOptions);
+
     //comment out to stop posting every time app.js runs.
-    //reddit.r.submitSelfpost(postOptions).then(console.log);
+    reddit.r.submitSelfpost(postOptions).then(console.log);
 });
 
 

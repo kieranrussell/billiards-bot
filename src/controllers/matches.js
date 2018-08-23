@@ -14,13 +14,12 @@ const options = {
 };
 
 function getData() {
-
+    return rp(options);
 }
 
 function get() {
     return new Promise(function (resolve, reject) {
-        rp(options)
-            .then(($) => {
+        getData().then(($) => {
                 var tournament = $('table#latest > thead > tr > th').text().trim();
                 var matches = [];
                 $('table#latest > tbody > tr').each((i, item) => {
@@ -46,5 +45,6 @@ function get() {
 
 module.exports = {
     get: get,
+    getData: getData,
     source: source
 };
