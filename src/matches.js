@@ -8,8 +8,8 @@ const options = {
     }
 };
 
-function get(){
-    return new Promise(function(resolve, reject){
+function get() {
+    return new Promise(function (resolve, reject) {
         rp(options)
             .then(($) => {
                 var matches = [];
@@ -25,10 +25,12 @@ function get(){
                 return matches;
             }).then((matches) => {
                 resolve(matches);
-        }).catch((err) => {
-            console.log(err);
-        });
+            }).catch((err) => {
+                console.log(err);
+            });
     })
 }
 
-module.exports = get;
+module.exports = { 
+    get: get 
+};
