@@ -1,4 +1,5 @@
 require('dotenv').config();
+const schedule = require('node-schedule');
 const reddit = require('./reddit');
 const client = reddit.client;
 const http = require('http');
@@ -11,12 +12,19 @@ const streamOpts = {
 
 const comments = client.CommentStream(streamOpts);
 
-//Post daily tournament/matches to subreddit
-matchesController.getDailyTournamentPost().then(function(dailyTournamentPost) {
-    console.log(dailyTournamentPost);
-    //comment out to stop posting every time app.js runs.
-    reddit.r.submitSelfpost(dailyTournamentPost).then(console.log);
+schedule.scheduleJob({hour: 6}, function(){
+    console.log('Running daily job to post update to subreddit');
+    postDailyUpdateToSubReddit(matchesController, reddit);
 });
+
+function postDailyUpdateToSubReddit(matchesController, reddit){
+    //Post daily tournament/matches to subreddit
+    matchesController.getDailyTournamentPost().then(function(dailyTournamentPost) {
+        console.log(dailyTournamentPost);
+        //comment out to stop posting every time app.js runs.
+        reddit.r.submitSelfpost(dailyTournamentPost).then(console.log);
+    });
+}
 
 
 //Listen for comments and reply.
