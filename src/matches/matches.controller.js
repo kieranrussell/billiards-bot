@@ -1,4 +1,4 @@
-const matches = require('./matches.data');
+const matches = require('./matches.data-access');
 
 //Submit post with daily matches for current tournament.
 let stringFormatMatches = ['|Match||Time\n---------:|:--------:|:---------|----------'];
