@@ -15,20 +15,27 @@ const streamOpts = {
 const comments = client.CommentStream(streamOpts);
 
 //Submit post with daily matches for current tournament.
-let stringFormatMatches = 'Player 1|Player 2|Time\n----------|----------|----------\n';
+let stringFormatMatches = 'Match|||Time\n---------:|:--------:|:---------|----------\n';
 
 matches.get().then(function(data) {
+    data = data.filter((item) => {
+        return item.time.includes('today');
+    });
+
     for(let i=0; i<data.length; i++) {
-        stringFormatMatches += data[i].player + '|' + data[i].opponent + '|' + data[i].time + '\n';
+        stringFormatMatches += data[i].player + '|V|' + data[i].opponent + '|' + data[i].time.replace('Est. today', '~') + '\n';
     }
+
+    let currentTime = new Date();
 
     let postOptions = {
         subredditName: process.env.SUBREDDIT_NAME,
-        title: 'billiardbot selfpost test {Discssion Thread}' + Date.now(),
+        title: '{Discssion Thread} TOURNAMENT NAME ' + currentTime.getDay() + '/' + currentTime.getMonth() + '/' + currentTime.getFullYear(),
         text: stringFormatMatches
     };
 
-    reddit.r.submitSelfpost(postOptions).then(console.log);
+    //comment out to stop posting every time app.js runs.
+    //reddit.r.submitSelfpost(postOptions).then(console.log);
 });
 
 
