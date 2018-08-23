@@ -97,8 +97,3 @@ function getCommentReply(comment){
         });
     });
 }
-
-
-module.exports = {
-    matches: todaysMatches
-};
