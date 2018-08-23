@@ -14,6 +14,7 @@ const streamOpts = {
 
 const comments = client.CommentStream(streamOpts);
 
+//Submit post with daily matches for current tournament.
 let stringFormatMatches = 'Player 1|Player 2|Time\n----------|----------|----------\n';
 
 matches.get().then(function(data) {
@@ -21,7 +22,6 @@ matches.get().then(function(data) {
         stringFormatMatches += data[i].player + '|' + data[i].opponent + '|' + data[i].time + '\n';
     }
 
-    //Submit post with daily matches for current tournament.
     let postOptions = {
         subredditName: process.env.SUBREDDIT_NAME,
         title: 'billiardbot selfpost test {Discssion Thread}' + Date.now(),
