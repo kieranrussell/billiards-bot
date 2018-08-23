@@ -11,5 +11,6 @@ const r = new Snoowrap({
 });
 
 module.exports = {
-  client: new Snoostorm(r)
+  client: new Snoostorm(r),
+  r: r
 };

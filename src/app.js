@@ -14,13 +14,25 @@ const streamOpts = {
 
 const comments = client.CommentStream(streamOpts);
 
-
-let todaysMatches = [];
+let stringFormatMatches = 'Player 1|Player 2|Time\n----------|----------|----------\n';
 
 matches.get().then(function(data) {
-    todaysMatches = data;
+    for(let i=0; i<data.length; i++) {
+        stringFormatMatches += data[i].player + '|' + data[i].opponent + '|' + data[i].time + '\n';
+    }
+
+    //Submit post with daily matches for current tournament.
+    let postOptions = {
+        subredditName: process.env.SUBREDDIT_NAME,
+        title: 'billiardbot selfpost test {Discssion Thread}' + Date.now(),
+        text: stringFormatMatches
+    };
+
+    reddit.r.submitSelfpost(postOptions).then(console.log);
 });
 
+
+//Listen for comments and reply.
 comments.on('comment', function (comment) {
     console.log(comment);
     if (comment.body.indexOf('billiardbot') !== -1) {
