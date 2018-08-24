@@ -10,7 +10,7 @@ const streamOpts = {
     results: 25
 };
 
-const comments = client.CommentStream(streamOpts);
+//const comments = client.CommentStream(streamOpts);
 
 schedule.scheduleJob({hour: 6}, function(){
     console.log('Running daily job to post update to subreddit');
@@ -20,24 +20,22 @@ schedule.scheduleJob({hour: 6}, function(){
 function postDailyUpdateToSubReddit(matchesController, reddit){
     //Post daily tournament/matches to subreddit
     matchesController.getDailyTournamentPost().then(function(dailyTournamentPost) {
-        console.log(dailyTournamentPost);
-        //comment out to stop posting every time app.js runs.
         reddit.r.submitSelfpost(dailyTournamentPost).then(console.log);
     });
 }
 
 
 //Listen for comments and reply.
-comments.on('comment', function (comment) {
-    console.log(comment);
-    if (comment.body.indexOf('billiardbot') !== -1) {
-        getCommentReply(comment).then(function(reply){
-            comment.reply(reply);
-        }).catch(function(error){
-            console.log(error);
-        });
-    }
-});
+// comments.on('comment', function (comment) {
+//     console.log(comment);
+//     if (comment.body.indexOf('billiardbot') !== -1) {
+//         getCommentReply(comment).then(function(reply){
+//             comment.reply(reply);
+//         }).catch(function(error){
+//             console.log(error);
+//         });
+//     }
+// });
 
 function getData(url) {
     console.log(url);

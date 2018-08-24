@@ -1,7 +1,7 @@
 const matches = require('./matches.data-access');
 
 //Submit post with daily matches for current tournament.
-let stringFormatMatches = ['|Match||Time\n---------:|:--------:|:---------|----------'];
+let stringFormatMatches = ['Match|||Time\n---------:|:--------:|:---------|----------'];
 
 function getDailyTournamentPost(){
     return new Promise(function(resolve, reject){
@@ -19,18 +19,32 @@ function getDailyTournamentPost(){
             }
 
             stringFormatMatches = stringFormatMatches.concat(todaysData.map((match) => {
-                return `${match.player}|V|${match.opponent}|${match.time.replace('Est. today', '~')}`
+                return `${match.player}|V|${match.opponent}|${timeFormat(match.time.replace('Est. today', ''))}`
             })).join('\n');
 
             let currentTime = new Date();
 
             resolve({
                 subredditName: process.env.SUBREDDIT_NAME,
-                title: `{Discssion Thread} ${tournamentName} ${currentTime.getDay()}/${currentTime.getMonth()}/${currentTime.getFullYear()}`,
+                title: `{Discssion Thread} ${tournamentName} ${currentTime.getDate()}/${currentTime.getMonth()+1}/${currentTime.getFullYear()}`,
                 text: stringFormatMatches
             });
         })
     });
+}
+
+function timeFormat(time) { 
+    let url = '(http://www.thetimezoneconverter.com/?t=';
+    let endUrl = '&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)';
+
+    let ampm = time.slice(-2)
+    time = time.slice(0, -2);
+
+    if(!time.includes(':')) {
+        time = time + ':00';
+    }
+
+    return '[~' + time + ampm + ']' + url + time + '%20' + ampm + endUrl;
 }
 
 module.exports = {
