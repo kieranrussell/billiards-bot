@@ -18,11 +18,11 @@ module.exports = {
     '   <td class="player "><a href="/res/index.asp?player=2277" title="Curtis Daher">Curtis Daher</a> (a)</td>' +
     '   <td class="player h2h" rowspan="1">' +
     '   &nbsp;</td>' +
-    '   <td class="scheduled editcell" rowspan="1" title="Estimated time: Fri 24&nbsp;Aug&nbsp;2pm (Fri 24&nbsp;Aug&nbsp;2pm CEST)">Est. Fri 24&nbsp;Aug&nbsp;2pm<a class="editlink" href="http://backend.snooker.org/res/scorekeeper/admin/?action=11&amp;par_event_id=722&amp;par_round_id=7#match4758026" target="_top" style="text-decoration: none; padding-left: 3px;">&nbsp;<img src="/res/scorekeeper/gfx/edit-16.png" alt="Pencil" title="Edit"></a>  </td></tr>' +
+    '   <td class="scheduled editcell" rowspan="1" title="Estimated time: Fri 24&nbsp;Aug&nbsp;2pm (Fri 24&nbsp;Aug&nbsp;2pm CEST)">Est. today&nbsp;5pm<a class="editlink" href="http://backend.snooker.org/res/scorekeeper/admin/?action=11&amp;par_event_id=722&amp;par_round_id=7#match4758026" target="_top" style="text-decoration: none; padding-left: 3px;">&nbsp;<img src="/res/scorekeeper/gfx/edit-16.png" alt="Pencil" title="Edit"></a>  </td></tr>' +
     '</tbody>' +
     '</table>',
     dailyMessage: {
-        'title': '{Discssion Thread} Paul Hunter Classic (22-26 Aug 2018) 4/7/2018',
-        'text': '|Match||Time\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|Est. Fri 24 Aug 2pm'
+        'title': '{Discssion Thread} Paul Hunter Classic (22-26 Aug 2018) 24/8/2018',
+        'text': 'Match|||Time\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[~ 5:00pm](http://www.thetimezoneconverter.com/?t= 5:00%20pm&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)'
     }
 };

@@ -30,6 +30,6 @@ describe('Match data retrieval', () => {
 
     it('should return a list of matches as an array with populated values', async () => {
         var matchData = await matches.get();
-        expect(JSON.stringify(matchData.matches)).to.equal('[{"player":"Luca Brecel","opponent":"Curtis Daher","time":"Est. Fri 24 Aug 2pm"}]');
+        expect(JSON.stringify(matchData.matches)).to.equal('[{"player":"Luca Brecel","opponent":"Curtis Daher","time":"Est. today 5pm"}]');
     });
 });
