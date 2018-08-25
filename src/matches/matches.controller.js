@@ -1,7 +1,9 @@
 const matches = require('./matches.data-access');
 
 //Submit post with daily matches for current tournament.
-let stringFormatMatches = ['Match|||Time\n---------:|:--------:|:---------|----------'];
+let stringFormatMatches = ['Match|||Time^1\n---------:|:--------:|:---------|----------'];
+let lineBreak = '\n\n&nbsp;\n\n';
+let postScript = '^(1. Times are in CEST, click for a local time conversion.)';
 
 function getDailyTournamentPost(){
     return new Promise(function(resolve, reject){
@@ -20,7 +22,7 @@ function getDailyTournamentPost(){
 
             stringFormatMatches = stringFormatMatches.concat(todaysData.map((match) => {
                 return `${match.player}|V|${match.opponent}|${timeFormat(match.time.replace('Est. today', ''))}`
-            })).join('\n');
+            })).join('\n').concat(lineBreak + postScript);
 
             let currentTime = new Date();
 

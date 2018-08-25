@@ -14,10 +14,10 @@ const streamOpts = {
 
 schedule.scheduleJob({hour: 6}, function(){
     console.log('Running daily job to post update to subreddit');
-    postDailyUpdateToSubReddit(matchesController, reddit);
+    postDailyUpdateToSubReddit(matchesController);
 });
 
-function postDailyUpdateToSubReddit(matchesController, reddit){
+function postDailyUpdateToSubReddit(matchesController){
     //Post daily tournament/matches to subreddit
     matchesController.getDailyTournamentPost().then(function(dailyTournamentPost) {
         reddit.r.submitSelfpost(dailyTournamentPost).then(console.log);
