@@ -32,11 +32,12 @@ function getDailyTournamentPost(){
     });
 }
 
-function timeFormat(inputTime) { 
-    let url = '(http://www.thetimezoneconverter.com/?t='; 
-    let endUrl = '&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)';
+function timeFormat(inputTime) {
+    let getTimeLink = (time, ampm) => {
+        return '(http://www.thetimezoneconverter.com/?t=' + time + ampm + '&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)'
+    };
 
-    let ampm = inputTime.slice(-2)
+    let ampm = inputTime.slice(-2);
     let time = inputTime.slice(0, -2);
 
 
@@ -44,7 +45,7 @@ function timeFormat(inputTime) {
         time += ':00';
     }
 
-    return '[~' + time + ampm + ']' + url + time + ampm + endUrl;
+    return '[~' + time + ampm + ']' + getTimeLink(time, ampm);
 }
 
 module.exports = {
