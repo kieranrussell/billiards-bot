@@ -11,7 +11,7 @@ const streamOpts = {
 };
 
 //const comments = client.CommentStream(streamOpts);
-
+postDailyUpdateToSubReddit(matchesController);
 schedule.scheduleJob({hour: 6}, function(){
     console.log('Running daily job to post update to subreddit');
     postDailyUpdateToSubReddit(matchesController);

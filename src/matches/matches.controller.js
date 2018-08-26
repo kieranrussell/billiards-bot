@@ -14,10 +14,7 @@ function getDailyTournamentPost(){
             });
 
             if(todaysData.length === 0){
-                var data = new Date();
-                todaysData = tournamentData.matches.filter((item) => {
-                    return item.time.includes(data.getDate() + 1);
-                });
+                throw "No matches available for today.";
             }
 
             stringFormatMatches = stringFormatMatches.concat(todaysData.map((match) => {
@@ -35,18 +32,19 @@ function getDailyTournamentPost(){
     });
 }
 
-function timeFormat(time) { 
-    let url = '(http://www.thetimezoneconverter.com/?t=';
+function timeFormat(inputTime) { 
+    let url = '(http://www.thetimezoneconverter.com/?t='; 
     let endUrl = '&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)';
 
-    let ampm = time.slice(-2)
-    time = time.slice(0, -2);
+    let ampm = inputTime.slice(-2)
+    let time = inputTime.slice(0, -2);
+
 
     if(!time.includes(':')) {
-        time = time + ':00';
+        time += ':00';
     }
 
-    return '[~' + time + ampm + ']' + url + time + '%20' + ampm + endUrl;
+    return '[~' + time + ampm + ']' + url + time + ampm + endUrl;
 }
 
 module.exports = {

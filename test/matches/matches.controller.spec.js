@@ -15,7 +15,7 @@ describe('Match data transformation into post', () => {
     it('should return a daily tournament post object', async () => {
         var dailyTournamentPost = await matches.getDailyTournamentPost();
 
-        expect(dailyTournamentPost.title).to.equal(matchesMock.dailyMessage.title);
+        expect(dailyTournamentPost.title).to.include(matchesMock.dailyMessage.title);
         expect(dailyTournamentPost.text).to.equal(matchesMock.dailyMessage.text);
     });
 });
