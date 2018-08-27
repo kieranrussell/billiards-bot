@@ -1,3 +1,5 @@
+const comments = client.CommentStream(streamOpts);
+
 //Listen for comments and reply.
 comments.on('comment', function (comment) {
     console.log(comment);

@@ -10,8 +10,6 @@ const streamOpts = {
     results: 25
 };
 
-postDailyUpdateToSubReddit(matchesController);
-//const comments = client.CommentStream(streamOpts);
 schedule.scheduleJob({hour: 6}, () => {
     console.log('Running daily job to post update to subreddit');
     postDailyUpdateToSubReddit(matchesController);
