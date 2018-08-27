@@ -23,6 +23,6 @@ module.exports = {
     '</table>',
     dailyMessage: {
         'title': '{Discssion Thread} Paul Hunter Classic (22-26 Aug 2018)',
-        'text': 'Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[~ 5:00pm](http://www.thetimezoneconverter.com/?t= 5:00pm&tz=CEST%20\\(Central%20European%20Summer%20Time\\)&)\n\n&nbsp;\n\n^(1. Times are in CEST, click for a local time conversion.)'
+        'text': 'Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CEST%20\\(Central%20European%20Summer%20Time\\))\n\n&nbsp;\n\n^(1. Times are in CEST, click for a local time conversion.)'
     }
 };

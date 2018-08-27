@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 const source = {
     domain: 'http://www.snooker.org',
-    path: '/res/index.asp?template=24'
+    path: '/res/index.asp?template=24&numperpage=100'
 };
 
 const options = {
@@ -19,23 +19,23 @@ function getData() {
 
 function get() {
     return new Promise(function (resolve, reject) {
-        getData().then(($) => {
-                var tournament = $('table#latest > thead > tr > th').text().trim();
-                var matches = [];
-                $('table#latest > tbody > tr').each((i, item) => {
-                    var match = {
-                        player: $('td.player:nth-child(3) > a', item).text().trim(),
-                        opponent: $('td.player:nth-child(8) > a', item).text().trim(),
-                        time: $('td.scheduled', item).text().trim()
-                    };
-                    matches.push(match);
-                });
-
-                return {
-                    matches: matches,
-                    tournament: tournament
+        getData().then(($) => {            
+            var tournament = $('table#latest > thead > tr > th').text().trim();
+            var matches = [];
+            $('table#latest > tbody > tr').each((i, item) => {                
+                var match = {
+                    player: $('td.player:nth-child(3)', item).text().replace('(a)', '').replace(/\[(.*?)\]/, '').trim(),
+                    opponent: $('td.player:nth-child(8)', item).text().replace('(a)', '').replace(/\[(.*?)\]/, '').trim(),
+                    time: $('td.scheduled', item).text().trim()
                 };
-            }).then((dailyUpdate) => {
+                matches.push(match);
+            });
+
+            return {
+                matches: matches,
+                tournament: tournament
+            };
+        }).then((dailyUpdate) => {
             resolve(dailyUpdate);
         }).catch((err) => {
             reject(err);
