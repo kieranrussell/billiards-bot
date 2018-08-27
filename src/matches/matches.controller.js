@@ -1,13 +1,13 @@
 const matches = require('./matches.data-access');
 
 //Submit post with daily matches for current tournament.
-let stringFormatMatches = ['Match|||Time^1\n---------:|:--------:|:---------|----------'];
 let lineBreak = '\n\n&nbsp;\n\n';
 let postScript = '^(1. Times are in CEST, click for a local time conversion.)';
 
 function getDailyTournamentPost() {
     return new Promise((resolve, reject) => {
         matches.get().then((tournamentData) => {
+            let stringFormatMatches = ['Match|||Time^1\n---------:|:--------:|:---------|----------'];
             let endBracket = tournamentData.tournament.indexOf(')') + 1;
             var tournamentName = tournamentData.tournament.slice(0, endBracket);            
             var todaysData = tournamentData.matches.filter((item) => {

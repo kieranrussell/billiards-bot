@@ -5,7 +5,7 @@ const client = reddit.client;
 const http = require('http');
 const matchesController = require('./matches/matches.controller');
 
-schedule.scheduleJob({hour: 6}, () => {
+schedule.scheduleJob('* 6 * * *', () => {
     console.log('Running daily job to post update to subreddit');
     postDailyUpdateToSubReddit(matchesController);
 });
