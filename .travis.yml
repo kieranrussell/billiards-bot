@@ -10,5 +10,7 @@ deploy:
     secure: "896bc988-0560-437b-8fb0-db48b2ef624e"
   app: 
     on: 
-      branch: master
+      branch:
+        only: 
+          -master
 
