@@ -5,11 +5,6 @@ const client = reddit.client;
 const http = require('http');
 const matchesController = require('./matches/matches.controller');
 
-const streamOpts = {
-    subreddit: process.env.SUBREDDIT_NAME,
-    results: 25
-};
-
 schedule.scheduleJob({hour: 6}, () => {
     console.log('Running daily job to post update to subreddit');
     postDailyUpdateToSubReddit(matchesController);
