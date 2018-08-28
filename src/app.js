@@ -3,7 +3,7 @@ const schedule = require('node-schedule');
 const reddit = require('./reddit');
 const matchesController = require('./matches/matches.controller');
 
-schedule.scheduleJob('* 6 * * *', () => {
+schedule.scheduleJob('0 * * * *', () => {
     console.log('Running daily job to post update to subreddit');
     postDailyUpdateToSubReddit(matchesController);
 });
