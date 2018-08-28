@@ -1,4 +1,4 @@
-# billiards-bot [![Build Status](https://travis-ci.org/kieranrussell/billiards-bot.svg?branch=master)](https://travis-ci.org/kieranrussell/billiards-bot)
+# Billiard Bot [u/BilliardBot](https://www.reddit.com/user/billiardbot) [![Build Status](https://travis-ci.org/kieranrussell/billiards-bot.svg?branch=master)](https://travis-ci.org/kieranrussell/billiards-bot)
 Billiard Bot is a Reddit Bot which provides Billiard enthusiasts with data concerning all things Billiards.
 
 ##### Currently Implemented Functionality
