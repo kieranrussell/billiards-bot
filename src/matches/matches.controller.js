@@ -11,8 +11,10 @@ function getDailyTournamentPost() {
             let endBracket = tournamentData.tournament.indexOf(')') + 1;
             var tournamentName = tournamentData.tournament.slice(0, endBracket);            
             var todaysData = tournamentData.matches.filter((item) => {
-                return item.time.toLowerCase().includes('today');
+                return (item.player !== '' && item.opponent !== '');//item.time.toLowerCase().includes('today');
             });
+
+            console.log(todaysData);            
 
             if(todaysData.length === 0) {              
                 reject("No Matches available for today.");
