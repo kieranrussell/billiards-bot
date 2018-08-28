@@ -1,3 +1,6 @@
+const client = reddit.client;
+const http = require('http');
+
 const streamOpts = {
     subreddit: process.env.SUBREDDIT_NAME,
     results: 25
