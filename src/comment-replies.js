@@ -1,3 +1,11 @@
+const client = reddit.client;
+const http = require('http');
+
+const streamOpts = {
+    subreddit: process.env.SUBREDDIT_NAME,
+    results: 25
+};
+
 const comments = client.CommentStream(streamOpts);
 
 //Listen for comments and reply.
