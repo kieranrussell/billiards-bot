@@ -26,7 +26,7 @@ function getDailyTournamentPost() {
 
             resolve({
                 subredditName: process.env.SUBREDDIT_NAME,
-                title: `{Discssion Thread} ${tournamentName} ${currentTime.getDate()}/${currentTime.getMonth()+1}/${currentTime.getFullYear()}`,
+                title: `${env.env} {Discssion Thread} ${tournamentName} ${currentTime.getDate()}/${currentTime.getMonth()+1}/${currentTime.getFullYear()}`,
                 text: stringFormatMatches
             });
         }).catch((error) => {
