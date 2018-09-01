@@ -1,11 +1,11 @@
-const matches = require('./matches/matches.data-access');
+const matchesData = require('./matches/matches.data-access');
 const express = require('express');
 const app = express();
 
 let port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    matches.get()
+    matchesData.get()
     .then((data) => {
         console.log('Returning data');        
         return res.send(JSON.stringify(data));
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/:name', (req, res) => {
-    matches.get()
+    matchesData.get()
     .then((data) => {
         console.log('Returning data');
         let match = data.matches.filter((item) => {

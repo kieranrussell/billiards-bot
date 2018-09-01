@@ -9,12 +9,12 @@ function getDailyTournamentPost() {
         matches.get().then((tournamentData) => {
             let stringFormatMatches = ['Match|||Time^1\n---------:|:--------:|:---------|----------'];
             let endBracket = tournamentData.tournament.indexOf(')') + 1;
-            var tournamentName = tournamentData.tournament.slice(0, endBracket);            
+            var tournamentName = tournamentData.tournament.slice(0, endBracket);
             var todaysData = tournamentData.matches.filter((item) => {
                 return (item.player !== '' && item.opponent !== '');//item.time.toLowerCase().includes('today');
-            });         
+            });
 
-            if(todaysData.length === 0) {              
+            if(todaysData.length === 0) {
                 reject("No Matches available for today.");
             }
 
@@ -22,7 +22,7 @@ function getDailyTournamentPost() {
                 return `${match.player}|V|${match.opponent}|${timeFormat(match.time)}`
             })).join('\n').concat(lineBreak + postScript);
 
-            let currentTime = new Date();         
+            let currentTime = new Date();
 
             resolve({
                 subredditName: process.env.SUBREDDIT_NAME,
