@@ -11,7 +11,7 @@ function getDailyTournamentPost() {
             let endBracket = tournamentData.tournament.indexOf(')') + 1;
             var tournamentName = tournamentData.tournament.slice(0, endBracket);            
             var todaysData = tournamentData.matches.filter((item) => {
-                return (item.player !== '' && item.opponent !== '');//item.time.toLowerCase().includes('today');
+                return (item.player !== '' && item.opponent !== '' && item.time.toLowerCase().includes('today'));
             });         
 
             if(todaysData.length === 0) {              
