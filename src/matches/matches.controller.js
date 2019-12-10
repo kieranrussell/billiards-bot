@@ -2,7 +2,7 @@ const matches = require('./matches.data-access');
 
 //Submit post with daily matches for current tournament.
 let lineBreak = '\n\n&nbsp;\n\n';
-let postScript = '^(1. Times are in CEST, click for a local time conversion.)';
+let postScript = '^(1. Times are in CET, click for a local time conversion.)';
 
 function getDailyTournamentPost() {
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ function timeFormat(inputTime) {
     let time = parsedTime.slice(0, -2);
 
     let getTimeLink = (time, ampm) => {
-        return '(http://www.thetimezoneconverter.com/?t=' + time + ampm + '&tz=CEST%20\\(Central%20European%20Summer%20Time\\))';
+        return '(http://www.thetimezoneconverter.com/?t=' + time + ampm + '&tz=CET%20\\(Central%20European%20Time\\))';
     };
 
     if(!time.includes(':')) {
