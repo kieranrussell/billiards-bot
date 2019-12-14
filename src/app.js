@@ -1,4 +1,4 @@
-require('dotenv').config();
-const scheduler = require('./scheduler/app.scheduler');
+require("dotenv").config();
+const scheduler = require("./scheduler/app.scheduler");
 
 scheduler.initialise();
