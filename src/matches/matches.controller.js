@@ -41,7 +41,7 @@ function getDailyTournamentPost() {
 
         resolve({
           subredditName: process.env.SUBREDDIT_NAME,
-          title: `{Discssion Thread} ${tournamentName} ${currentTime.getDate()}/${currentTime.getMonth() +
+          title: `{Discussion Thread} ${tournamentName} ${currentTime.getDate()}/${currentTime.getMonth() +
             1}/${currentTime.getFullYear()}`,
           text: stringFormatMatches
         });
@@ -58,12 +58,17 @@ function timeFormat(inputTime) {
     .replace(new RegExp("Est. today", "i"), "")
     .replace(new RegExp("today", "i"), "")
     .replace(new RegExp(" noon", "i"), "pm")
+    .replace(new RegExp("today", ""), "&")
     .trim();
   let ampm = parsedTime.slice(-2);
   let time = parsedTime.slice(0, -2);
 
   let getTimeLink = (time, ampm) => {
     return (
+      "[" +
+      time +
+      ampm +
+      "]" +
       "(http://www.thetimezoneconverter.com/?t=" +
       time +
       ampm +
@@ -75,7 +80,7 @@ function timeFormat(inputTime) {
     time += ":00";
   }
 
-  return "[" + time + ampm + "]" + getTimeLink(time, ampm);
+  return getTimeLink(time, ampm);
 }
 
 module.exports = {
