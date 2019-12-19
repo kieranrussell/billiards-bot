@@ -23,7 +23,7 @@ module.exports = {
     "</tbody>" +
     "</table>",
   dailyMessage: {
-    title: "{Discssion Thread} Paul Hunter Classic (22-26 Aug 2018)",
+    title: "{Discussion Thread} Paul Hunter Classic (22-26 Aug 2018)",
     text:
       "Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CET%20\\(Central%20European%20Time\\))\n\n&nbsp;\n\n^(1. Times are in CET, click for a local time conversion.)"
   }

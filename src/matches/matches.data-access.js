@@ -5,8 +5,6 @@ const source = {
   domain: "http://www.snooker.org"
 };
 
-//"/res/index.asp?template=24&numperpage=100&event="
-
 const options = {
   uri: source.domain,
   transform: transform
@@ -20,8 +18,6 @@ function getPath() {
   return getData(options)
     .then($ => {
       var path = $("a:contains('Upcoming matches')").attr("href");
-
-      console.log(path);
 
       return path;
     })
