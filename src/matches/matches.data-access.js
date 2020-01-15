@@ -17,7 +17,9 @@ function transform(body) {
 function getPath() {
   return getData(options)
     .then($ => {
-      var path = $("a:contains('Upcoming matches')").attr("href");
+      var path = $("a:contains('Upcoming matches')")
+        .first()
+        .attr("href");
 
       return path;
     })
