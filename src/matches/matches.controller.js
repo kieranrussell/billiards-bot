@@ -9,6 +9,17 @@ function getDailyTournamentPost() {
     matches
       .get()
       .then(tournamentData => {
+        let info =
+          getRedditFormatLink(
+            "Live scores",
+            tournamentData.urls.domain + tournamentData.urls.liveScores
+          ) +
+          "\n" +
+          getRedditFormatLink(
+            "Results",
+            tournamentData.urls.domain + tournamentData.urls.results
+          );
+
         let stringFormatMatches = [
           "Match|||Time^1\n---------:|:--------:|:---------|----------"
         ];
@@ -35,6 +46,7 @@ function getDailyTournamentPost() {
             })
           )
           .join("\n")
+          .concat(lineBreak + info)
           .concat(lineBreak + postScript);
 
         let currentTime = new Date();
@@ -53,6 +65,10 @@ function getDailyTournamentPost() {
   });
 }
 
+function getRedditFormatLink(text, url) {
+  return "[" + text + "](" + url + ")";
+}
+
 function timeFormat(inputTime) {
   let parsedTime = inputTime
     .replace(new RegExp("Est. today", "i"), "")
@@ -64,15 +80,12 @@ function timeFormat(inputTime) {
   let time = parsedTime.slice(0, -2);
 
   let getTimeLink = (time, ampm) => {
-    return (
-      "[" +
-      time +
-      ampm +
-      "]" +
-      "(http://www.thetimezoneconverter.com/?t=" +
-      time +
-      ampm +
-      "&tz=CET%20\\(Central%20European%20Time\\))"
+    return getRedditFormatLink(
+      time + ampm,
+      "http://www.thetimezoneconverter.com/?t=" +
+        time +
+        ampm +
+        "&tz=CET%20\\(Central%20European%20Time\\)"
     );
   };
 

@@ -14,6 +14,10 @@ function transform(body) {
   return cheerio.load(body);
 }
 
+function getData(options) {
+  return rp(options);
+}
+
 function getPath() {
   return getData(options)
     .then($ => {
@@ -28,15 +32,13 @@ function getPath() {
     });
 }
 
-function getData(options) {
-  return rp(options);
-}
-
 function get() {
   return new Promise(function(resolve, reject) {
     getPath().then((path = "/res/index.asp?template=24&numperpage=100") => {
       getData({ uri: source.domain + path, transform: transform })
         .then($ => {
+          var liveScoresPath = $("a:contains('live scores')").attr("href");
+          var resultsPath = $("a:contains('live scores')").attr("href");
           var tournament = $("table#latest > thead > tr > th")
             .text()
             .trim();
@@ -62,7 +64,12 @@ function get() {
 
           return {
             matches: matches,
-            tournament: tournament
+            tournament: tournament,
+            urls: {
+              domain: source.domain,
+              liveScores: liveScoresPath,
+              results: resultsPath
+            }
           };
         })
         .then(dailyUpdate => {

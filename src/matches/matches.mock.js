@@ -1,5 +1,10 @@
 module.exports = {
   raw:
+    '<p class="info">' +
+    "Upcoming matches (76) ordered by scheduled time (CET).<!-- Click events/rounds for draws.-->" +
+    "See also" +
+    '<a href="/res/index.asp?template=21">live scores</a>  (1) and ' +
+    '<a href="/res/index.asp?template=22">results</a> (2&nbsp;304).</p>' +
     '<table cellpadding="0" cellspacing="0" border="0" class="display matches" id="latest">' +
     '<thead id="first">' +
     "<tr>" +
@@ -25,6 +30,6 @@ module.exports = {
   dailyMessage: {
     title: "{Discussion Thread} Paul Hunter Classic (22-26 Aug 2018)",
     text:
-      "Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CET%20\\(Central%20European%20Time\\))\n\n&nbsp;\n\n^(1. Times are in CET, click for a local time conversion.)"
+      "Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CET%20\\(Central%20European%20Time\\))\n\n&nbsp;\n\n[Live scores](http://www.snooker.org/res/index.asp?template=21)\n[Results](http://www.snooker.org/res/index.asp?template=21)\n\n&nbsp;\n\n^(1. Times are in CET, click for a local time conversion.)"
   }
 };
