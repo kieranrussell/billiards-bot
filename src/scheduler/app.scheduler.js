@@ -27,7 +27,7 @@ function initialise() {
             );
           })
           .catch(err => {
-            console.log(err);
+            console.error(err);
             console.log(
               "Finished Running scheduled task: " +
                 taskName +

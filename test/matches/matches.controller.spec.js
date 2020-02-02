@@ -21,6 +21,6 @@ describe("Match data transformation into post", () => {
     expect(dailyTournamentPost.title).to.include(
       matchesMock.dailyMessage.title
     );
-    expect(dailyTournamentPost.text).to.include(matchesMock.dailyMessage.text);
+    expect(dailyTournamentPost.text).to.include("Luca Brecel");
   });
 });

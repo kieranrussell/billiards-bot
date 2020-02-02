@@ -30,6 +30,6 @@ module.exports = {
   dailyMessage: {
     title: "{Discussion Thread} Paul Hunter Classic (22-26 Aug 2018)",
     text:
-      "Match|||Time^1\n---------:|:--------:|:---------|----------\nLuca Brecel|V|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CET%20\\(Central%20European%20Time\\))\n\n&nbsp;\n\n[Live scores](http://www.snooker.org/res/index.asp?template=21)\n[Results](http://www.snooker.org/res/index.asp?template=21)\n\n&nbsp;\n\n^(1. Times are in CET, click for a local time conversion.)"
+      "Round|Best Of|||Time^1\n----------|----------|---------:|:--------:|:---------|----------\nRd 1|(7)|Luca Brecel|v|Curtis Daher|[5:00pm](http://www.thetimezoneconverter.com/?t=5:00pm&tz=CET%20\\(Central%20European%20Time\\))\n\n&nbsp;\n\n[Live scores](http://www.snooker.org/res/index.asp?template=21)\n[Results](http://www.snooker.org/res/index.asp?template=21)\n\n&nbsp;\n\n^(1. Times are in CET, click for a local time conversion.)"
   }
 };

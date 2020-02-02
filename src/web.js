@@ -4,6 +4,16 @@ const app = express();
 
 let port = process.env.PORT || 3000;
 
+app.get("/test", (req, res) => {
+  matchesData
+    .api()
+    .then(id => res.send(id))
+    .catch(err => {
+      console.error(err);
+      return res.send(err);
+    });
+});
+
 app.get("/", (req, res) => {
   matchesData
     .get()
@@ -11,9 +21,9 @@ app.get("/", (req, res) => {
       console.log("Returning data");
       return res.send(JSON.stringify(data));
     })
-    .catch(error => {
-      console.log(error);
-      return res.send(error);
+    .catch(err => {
+      console.error(err);
+      return res.send(err);
     });
 });
 
@@ -30,9 +40,9 @@ app.get("/:name", (req, res) => {
       });
       return res.send(JSON.stringify(match));
     })
-    .catch(error => {
-      console.log(error);
-      return res.send(error);
+    .catch(err => {
+      console.error(err);
+      return res.send(err);
     });
 });
 

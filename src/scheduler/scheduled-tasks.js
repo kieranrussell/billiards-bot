@@ -1,12 +1,12 @@
 module.exports = {
   postDailyUpdateToSubReddit: {
     controller: require("../matches/matches.controller"),
-    cron: "0 6 * * *",
+    cron: "52 22 * * *",
     preProcessMessage: "Running daily job to post update to subreddit",
     execute: function(reddit) {
       return new Promise((resolve, reject) => {
         this.controller
-          .getDailyTournamentPost()
+          .getDailyTournamentPostViaApi()
           .then(dailyTournamentPost => {
             reddit.r
               .submitSelfpost(dailyTournamentPost)
@@ -18,7 +18,7 @@ module.exports = {
               });
           })
           .catch(err => {
-            console.log(err);
+            console.error(err);
             reject(err);
           });
       });
