@@ -1,7 +1,7 @@
 module.exports = {
   postDailyUpdateToSubReddit: {
     controller: require("../matches/matches.controller"),
-    cron: "52 22 * * *",
+    cron: "0 6 * * *",
     preProcessMessage: "Running daily job to post update to subreddit",
     execute: function(reddit) {
       return new Promise((resolve, reject) => {
