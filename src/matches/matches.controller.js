@@ -9,36 +9,38 @@ function getDailyTournamentPostViaApi() {
   return new Promise((resolve, reject) => {
     matches
       .api()
-      .then(tournamentData => {
+      .then(tournament => {
         let info =
           getRedditFormatLink(
             "Live scores",
-            tournamentData.urls.domain + tournamentData.urls.liveScores
+            tournament.urls.domain + tournament.urls.liveScores
           ) +
           "\n" +
           getRedditFormatLink(
             "Results",
-            tournamentData.urls.domain + tournamentData.urls.results
+            tournament.urls.domain + tournament.urls.results
           );
 
-        let stringFormatMatches = [
-          "Round|Player 1||Player 2|Time^1\n----------|---------:|:--------:|:---------|----------"
-        ];
-        var tournamentName = tournamentData.tournament.Name;
-        var todaysData = tournamentData.matches;
+        let tableHeader =
+          "Player 1||Player 2|Time^1\n---------:|:--------:|:---------|----------";
 
-        if (todaysData.length === 0) {
+        let stringFormatMatches = [];
+
+        if (tournament.rounds.length === 0) {
           reject("No Matches available for today.");
         }
 
         stringFormatMatches = stringFormatMatches
           .concat(
-            todaysData.map(match => {
-              return `${match.Round}|${playerName(
-                match.player1
-              )}|v|${playerName(match.player2)}|${timeFormat(
-                match.ScheduledDate
-              )}`;
+            tournament.rounds.map(round => {
+              return `__${round.RoundName}__ _Best of ${round.Distance * 2 -
+                1}_ \n\n${tableHeader} \n${round.matches
+                .map(match => {
+                  return `${playerName(match.player1)}|v|${playerName(
+                    match.player2
+                  )}|${timeFormat(match.ScheduledDate)}`;
+                })
+                .join("\n")}`;
             })
           )
           .join("\n")
@@ -47,7 +49,7 @@ function getDailyTournamentPostViaApi() {
 
         resolve({
           subredditName: process.env.SUBREDDIT_NAME,
-          title: `{Discussion Thread} ${tournamentName} ${moment().format(
+          title: `{Discussion Thread} ${tournament.Name} ${moment().format(
             "DD/MM/YYYY"
           )}`,
           text: stringFormatMatches

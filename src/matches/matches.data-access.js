@@ -11,7 +11,8 @@ const source = {
   api: "http://api.snooker.org",
   event: "/?e=",
   events: "/?t=6&e=",
-  players: "/?t=9&e="
+  players: "/?t=9&e=",
+  round: "/?t=12&e="
 };
 
 const options = {
@@ -51,26 +52,26 @@ function api() {
 
         return fetch(source.api.concat(source.events).concat(eventId));
       })
-      .then(data => {
-        return data.json();
+      .then(eventWithMatches => {
+        return eventWithMatches.json();
       })
-      .then(tournamentMatches => {
-        let filteredByDate = tournamentMatches.filter(match => {
+      .then(eventWithMatches => {
+        let filteredByDateMatches = eventWithMatches.filter(match => {
           return (
             match.ScheduledDate.substring(0, 10) ===
             moment().format("YYYY-MM-DD")
           );
         });
-        return filteredByDate;
+        return filteredByDateMatches;
       })
-      .then(filteredMatches => {
+      .then(filteredByDateMatches => {
         return fetch(source.api.concat(source.players).concat(eventId))
           .then(res => {
             return res.json();
           })
           .then(playersData => {
             return {
-              matches: filteredMatches,
+              matches: filteredByDateMatches,
               players: playersData
             };
           })
@@ -79,35 +80,70 @@ function api() {
           });
       })
       .then(matchAndPlayers => {
-        transformedMatches = matchAndPlayers.matches.map(match => {
-          match.player1 = matchAndPlayers.players.filter(player => {
+        return fetch(source.api.concat(source.round).concat(eventId))
+          .then(res => {
+            return res.json();
+          })
+          .then(roundData => {
+            return {
+              ...matchAndPlayers,
+              rounds: roundData
+            };
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      })
+      .then(matchAndPlayersAndRounds => {
+        transformedMatches = matchAndPlayersAndRounds.matches.map(match => {
+          match.player1 = matchAndPlayersAndRounds.players.filter(player => {
             return player.ID === match.Player1ID;
           })[0];
 
-          match.player2 = matchAndPlayers.players.filter(player => {
+          match.player2 = matchAndPlayersAndRounds.players.filter(player => {
             return player.ID === match.Player2ID;
           })[0];
+
           return match;
         });
-        return transformedMatches;
-      })
-      .then(transformedMatches => {
-        return transformedMatches.sort((match, next) => {
-          return (
-            match.ScheduledDate.substring(11, 16).replace(":", "") >
-            next.ScheduledDate.substring(11, 16).replace(":", "")
-          );
+
+        roundBasedMatches = matchAndPlayersAndRounds.rounds.map(round => {
+          round.matches = transformedMatches.filter(match => {
+            return round.Round === match.Round;
+          });
+
+          return round;
         });
+
+        return roundBasedMatches;
       })
-      .then(sortedMatches => {
+      .then(roundBasedMatches => {
+        return roundBasedMatches
+          .filter(round => {
+            return round.matches.length > 0;
+          })
+          .sort((round, next) => {
+            return round.Round > next.Round;
+          })
+          .map(round => {
+            round.matches = round.matches.sort((match, next) => {
+              return (
+                match.ScheduledDate.substring(11, 16).replace(":", "") >
+                next.ScheduledDate.substring(11, 16).replace(":", "")
+              );
+            });
+            return round;
+          });
+      })
+      .then(filteredSortedRoundsWithSortedMatches => {
         return fetch(source.api.concat(source.event).concat(eventId))
           .then(res => {
             return res.json();
           })
           .then(eventData => {
             return {
-              matches: sortedMatches,
-              tournament: eventData[0],
+              ...eventData[0],
+              rounds: filteredSortedRoundsWithSortedMatches,
               urls: {
                 domain: source.domain,
                 liveScores: source.liveScoresPath + eventData[0].ID,
