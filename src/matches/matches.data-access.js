@@ -92,13 +92,21 @@ function api() {
         return transformedMatches;
       })
       .then(transformedMatches => {
+        return transformedMatches.sort((match, next) => {
+          return (
+            match.ScheduledDate.substring(11, 16).replace(":", "") >
+            next.ScheduledDate.substring(11, 16).replace(":", "")
+          );
+        });
+      })
+      .then(sortedMatches => {
         return fetch(source.api.concat(source.event).concat(eventId))
           .then(res => {
             return res.json();
           })
           .then(eventData => {
             return {
-              matches: transformedMatches,
+              matches: sortedMatches,
               tournament: eventData[0],
               urls: {
                 domain: source.domain,
