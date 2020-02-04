@@ -33,8 +33,15 @@ function getDailyTournamentPostViaApi() {
         stringFormatMatches = stringFormatMatches
           .concat(
             tournament.rounds.map(round => {
-              return `__${round.RoundName}__ _Best of ${round.Distance * 2 -
-                1}_ \n\n${tableHeader} \n${round.matches
+              return `__${round.RoundName}__ 
+              _Best of ${round.Distance * 2 - 1}_ 
+              \n\n${tableHeader} \n${round.matches
+                .sort((match, next) => {
+                  return (
+                    match.ScheduledDate.substring(11, 16).replace(":", "") >
+                    next.ScheduledDate.substring(11, 16).replace(":", "")
+                  );
+                })
                 .map(match => {
                   return `${playerName(match.player1)}|v|${playerName(
                     match.player2
