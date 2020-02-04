@@ -10,9 +10,9 @@ const source = {
   resultsPath: "/res/index.asp?template=22&event=",
   api: "http://api.snooker.org",
   event: "/?e=",
-  events: "/?t=6&e=",
-  players: "/?t=9&e=",
-  round: "/?t=12&e="
+  matchesInEvent: "/?t=6&e=",
+  playersInEvent: "/?t=9&e=",
+  roundsInEvent: "/?t=12&e="
 };
 
 const options = {
@@ -50,80 +50,67 @@ function api() {
           url.parse(source.domain + path).query
         ).get("event");
 
-        return fetch(source.api.concat(source.events).concat(eventId));
+        return eventId;
       })
-      .then(eventWithMatches => {
-        return eventWithMatches.json();
-      })
-      .then(eventWithMatches => {
-        let filteredByDateMatches = eventWithMatches.filter(match => {
-          return (
-            match.ScheduledDate.substring(0, 10) ===
-            moment().format("YYYY-MM-DD")
-          );
-        });
-        return filteredByDateMatches;
-      })
-      .then(filteredByDateMatches => {
-        return fetch(source.api.concat(source.players).concat(eventId))
-          .then(res => {
-            return res.json();
+      .then(eventId => {
+        return fetch(source.api.concat(source.event).concat(eventId))
+          .then(event => {
+            return event.json();
           })
-          .then(playersData => {
+          .then(eventArray => {
+            return eventArray[0];
+          });
+      })
+      .then(event => {
+        return fetch(source.api.concat(source.roundsInEvent).concat(event.ID))
+          .then(rounds => {
+            return rounds.json();
+          })
+          .then(rounds => {
             return {
-              matches: filteredByDateMatches,
-              players: playersData
+              ...event,
+              rounds: rounds
             };
-          })
-          .catch(err => {
-            console.error(err);
           });
       })
-      .then(matchAndPlayers => {
-        return fetch(source.api.concat(source.round).concat(eventId))
-          .then(res => {
-            return res.json();
+      .then(eventWithRounds => {
+        return fetch(
+          source.api.concat(source.matchesInEvent).concat(eventWithRounds.ID)
+        )
+          .then(matches => {
+            return matches.json();
           })
-          .then(roundData => {
+          .then(matches => {
+            eventWithRounds.rounds = eventWithRounds.rounds.map(round => {
+              return {
+                ...round,
+                matches: matches
+                  .filter(match => {
+                    return (
+                      match.ScheduledDate.substring(0, 10) ===
+                      moment().format("YYYY-MM-DD")
+                    );
+                  })
+                  .filter(match => {
+                    return round.Round === match.Round;
+                  })
+              };
+            });
+
             return {
-              ...matchAndPlayers,
-              rounds: roundData
+              ...eventWithRounds,
+              urls: {
+                domain: source.domain,
+                liveScores: source.liveScoresPath + eventWithRounds.ID,
+                results: source.resultsPath + eventWithRounds.ID
+              }
             };
-          })
-          .catch(err => {
-            console.error(err);
           });
       })
-      .then(matchAndPlayersAndRounds => {
-        transformedMatches = matchAndPlayersAndRounds.matches.map(match => {
-          match.player1 = matchAndPlayersAndRounds.players.filter(player => {
-            return player.ID === match.Player1ID;
-          })[0];
-
-          match.player2 = matchAndPlayersAndRounds.players.filter(player => {
-            return player.ID === match.Player2ID;
-          })[0];
-
-          return match;
-        });
-
-        roundBasedMatches = matchAndPlayersAndRounds.rounds.map(round => {
-          round.matches = transformedMatches.filter(match => {
-            return round.Round === match.Round;
-          });
-
-          return round;
-        });
-
-        return roundBasedMatches;
-      })
-      .then(roundBasedMatches => {
-        return roundBasedMatches
+      .then(eventWithRoundsAndMatches => {
+        eventWithRoundsAndMatches.rounds = eventWithRoundsAndMatches.rounds
           .filter(round => {
             return round.matches.length > 0;
-          })
-          .sort((round, next) => {
-            return round.Round > next.Round;
           })
           .map(round => {
             round.matches = round.matches.sort((match, next) => {
@@ -134,31 +121,39 @@ function api() {
             });
             return round;
           });
+        return eventWithRoundsAndMatches;
       })
-      .then(filteredSortedRoundsWithSortedMatches => {
-        return fetch(source.api.concat(source.event).concat(eventId))
-          .then(res => {
-            return res.json();
+      .then(eventsWithRoundsAndMatches => {
+        return fetch(source.api.concat(source.playersInEvent).concat(eventId))
+          .then(players => {
+            return players.json();
           })
-          .then(eventData => {
-            return {
-              ...eventData[0],
-              rounds: filteredSortedRoundsWithSortedMatches,
-              urls: {
-                domain: source.domain,
-                liveScores: source.liveScoresPath + eventData[0].ID,
-                results: source.resultsPath + eventData[0].ID
+          .then(players => {
+            eventsWithRoundsAndMatches.rounds = eventsWithRoundsAndMatches.rounds.map(
+              round => {
+                round.matches = round.matches.map(match => {
+                  match.player1 = players.filter(player => {
+                    return player.ID === match.Player1ID;
+                  })[0];
+
+                  match.player2 = players.filter(player => {
+                    return player.ID === match.Player2ID;
+                  })[0];
+
+                  return match;
+                });
+                return round;
               }
-            };
-          })
-          .catch(err => {
-            console.error(err);
+            );
+
+            return eventsWithRoundsAndMatches;
           });
       })
       .then(res => {
         resolve(res);
       })
       .catch(err => {
+        console.error(err);
         reject(err);
       });
   });

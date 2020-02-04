@@ -7,7 +7,7 @@ let port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   matchesData
     .api()
-    .then(id => res.send(id))
+    .then(tournament => res.send(tournament))
     .catch(err => {
       console.error(err);
       return res.send(err);
