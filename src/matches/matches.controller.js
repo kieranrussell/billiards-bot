@@ -47,7 +47,7 @@ function getDailyTournamentPostViaApi() {
                     match.player2
                   )}|${timeFormat(match.ScheduledDate)}`;
                 })
-                .join("\n")}`;
+                .join("\n")}\n`;
             })
           )
           .join("\n")
